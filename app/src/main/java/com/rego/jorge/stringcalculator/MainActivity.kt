@@ -8,12 +8,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val presenter = MainPresenter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         loginButton.setOnClickListener {
-            if(isCorrectLogin()) {
+            if(presenter.onLoginButtonClick(usernameEditText.text.toString(), passwordEditText.text.toString())) {
                 showLogged()
             } else {
                 showError()
@@ -21,19 +23,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         logoutButton.setOnClickListener {
-            showLogin()
+            if(presenter.onLogoutButtonClick(System.currentTimeMillis())) {
+                showLogin()
+            } else {
+                showLogoutError()
+            }
         }
 
         showLogin()
+    }
+
+    private fun showLogoutError() {
+        Toast.makeText(this, "Wrong logout time", Toast.LENGTH_LONG).show()
     }
 
     private fun showError() {
         Toast.makeText(this, "Wrong Credentials", Toast.LENGTH_LONG).show()
     }
 
-    private fun isCorrectLogin(): Boolean {
-        return usernameEditText?.text.toString() == "admin" && passwordEditText?.text.toString() == "admin"
-    }
 
     private fun showLogged() {
         loginButton?.visibility = View.GONE
@@ -55,11 +62,6 @@ class MainActivity : AppCompatActivity() {
             visibility = View.VISIBLE
         }
 
-        logoutButton?.run {
-            visibility = View.GONE
-            setOnClickListener {
-                showLogin()
-            }
-        }
+        logoutButton?.visibility = View.GONE
     }
 }
