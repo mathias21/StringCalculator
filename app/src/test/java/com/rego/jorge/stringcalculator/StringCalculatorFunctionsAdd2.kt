@@ -50,13 +50,14 @@ class StringCalculatorFunctionsAdd2 {
         sutcalculator.add2("-1,2,3")
     }
 
-    @Test
+    @Test(expected = InvalidInputException::class)
     fun `when input is -1,-2,3 , function add should throw an exception`() {
         try {
             sutcalculator.add2("-1,-2,3")
         } catch (e: Exception) {
             assert(e is InvalidInputException)
             Assert.assertEquals("Invalid negative numbers [-1, -2]", (e as InvalidInputException).message)
+            throw e
         }
     }
 
