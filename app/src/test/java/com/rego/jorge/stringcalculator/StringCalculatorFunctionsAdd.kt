@@ -36,4 +36,19 @@ class StringCalculatorFunctionsAdd {
         val result = sutcalculator.add("1,2")
         assert(result == 3)
     }
+
+    @Test(expected = InvalidInputException::class)
+    fun `when input is 1,a , function throw an exception`() {
+        sutcalculator.add("1,a")
+    }
+
+    @Test(expected = InvalidInputException::class)
+    fun `when input is 1dota , function throw an exception`() {
+        sutcalculator.add("1.a")
+    }
+
+    @Test(expected = InvalidInputException::class)
+    fun `when input is 1dot , function throw an exception`() {
+        sutcalculator.add("1.")
+    }
 }
