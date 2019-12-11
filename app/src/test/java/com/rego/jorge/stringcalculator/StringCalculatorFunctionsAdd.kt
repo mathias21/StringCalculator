@@ -37,6 +37,12 @@ class StringCalculatorFunctionsAdd {
         assert(result == 3)
     }
 
+    @Test
+    fun `when input is 11,22,33 , function add will return 3`() {
+        val result = sutcalculator.add("11,22,33")
+        assert(result == 66)
+    }
+
     @Test(expected = InvalidInputException::class)
     fun `when input is 1,a , function throw an exception`() {
         sutcalculator.add("1,a")
